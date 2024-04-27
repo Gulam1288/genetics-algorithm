@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genetic Algorithm Classification Project</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: radial-gradient(
+            circle at center center,
+            transparent,
+            rgb(0, 0, 0)
+          ),
+          linear-gradient(
+            114deg,
+            rgba(59, 59, 59, 0.05) 0%,
+            rgba(59, 59, 59, 0.05) 50%,
+            rgba(63, 63, 63, 0.05) 50%,
+            rgba(63, 63, 63, 0.05) 100%
+          ),
+          linear-gradient(
+            186deg,
+            rgba(173, 173, 173, 0.05) 0%,
+            rgba(173, 173, 173, 0.05) 50%,
+            rgba(237, 237, 237, 0.05) 50%,
+            rgba(237, 237, 237, 0.05) 100%
+          ),
+          linear-gradient(
+            98deg,
+            rgba(191, 191, 191, 0.05) 0%,
+            rgba(191, 191, 191, 0.05) 50%,
+            rgba(119, 119, 119, 0.05) 50%,
+            rgba(119, 119, 119, 0.05) 100%
+          ),
+          linear-gradient(
+            58deg,
+            rgba(95, 95, 95, 0.05) 0%,
+            rgba(95, 95, 95, 0.05) 50%,
+            rgba(189, 189, 189, 0.05) 50%,
+            rgba(189, 189, 189, 0.05) 100%
+          ),
+          linear-gradient(
+            259deg,
+            rgba(31, 31, 31, 0.05) 0%,
+            rgba(31, 31, 31, 0.05) 50%,
+            rgba(110, 110, 110, 0.05) 50%,
+            rgba(110, 110, 110, 0.05) 100%
+          ),
+          linear-gradient(
+            41deg,
+            rgba(142, 142, 142, 0.05) 0%,
+            rgba(142, 142, 142, 0.05) 50%,
+            rgba(84, 84, 84, 0.05) 50%,
+            rgba(84, 84, 84, 0.05) 100%
+          ),
+          linear-gradient(
+            134deg,
+            rgba(96, 96, 96, 0.05) 0%,
+            rgba(96, 96, 96, 0.05) 50%,
+            rgba(198, 198, 198, 0.05) 50%,
+            rgba(198, 198, 198, 0.05) 100%
+          ),
+          linear-gradient(
+            46deg,
+            rgba(12, 12, 12, 0.05) 0%,
+            rgba(12, 12, 12, 0.05) 50%,
+            rgba(71, 71, 71, 0.05) 50%,
+            rgba(71, 71, 71, 0.05) 100%
+          ),
+          radial-gradient(
+            circle at center center,
+            hsl(227, 81%, 21%),
+            hsl(227, 81%, 21%)
+          );
+        background-size: cover;
+      }
+
+      /* Hero Section */
+      .hero {
+        background: url("https://png.pngtree.com/thumb_back/fw800/background/20190223/ourmid/pngtree-blue-genetic-dna-medical-background-windbackground-display-boardbackgroundpsdcolorful-image_77077.jpg");
+        text-align: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 100px 0;
+      }
+
+      .hero-text {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+
+      .hero-subtext {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+      }
+
+      .section-heading {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        color: #fff;
+      }
+
+      /* Features Section */
+      .features {
+        background-image: linear-gradient(
+            309deg,
+            rgba(187, 187, 187, 0.03) 0%,
+            rgba(187, 187, 187, 0.03) 22%,
+            rgba(207, 207, 207, 0.03) 22%,
+            rgba(207, 207, 207, 0.03) 43%,
+            rgba(148, 148, 148, 0.03) 43%,
+            rgba(148, 148, 148, 0.03) 62%,
+            rgba(90, 90, 90, 0.03) 62%,
+            rgba(90, 90, 90, 0.03) 68%,
+            rgba(195, 195, 195, 0.03) 68%,
+            rgba(195, 195, 195, 0.03) 88%,
+            rgba(34, 34, 34, 0.03) 88%,
+            rgba(34, 34, 34, 0.03) 95%,
+            rgba(215, 215, 215, 0.03) 95%,
+            rgba(215, 215, 215, 0.03) 100%
+          ),
+          linear-gradient(
+            35deg,
+            rgba(100, 100, 100, 0.03) 0%,
+            rgba(100, 100, 100, 0.03) 9%,
+            rgba(5, 5, 5, 0.03) 9%,
+            rgba(5, 5, 5, 0.03) 40%,
+            rgba(89, 89, 89, 0.03) 40%,
+            rgba(89, 89, 89, 0.03) 44%,
+            rgba(5, 5, 5, 0.03) 44%,
+            rgba(5, 5, 5, 0.03) 69%,
+            rgba(130, 130, 130, 0.03) 69%,
+            rgba(130, 130, 130, 0.03) 79%,
+            rgba(204, 204, 204, 0.03) 79%,
+            rgba(204, 204, 204, 0.03) 88%,
+            rgba(247, 247, 247, 0.03) 88%,
+            rgba(247, 247, 247, 0.03) 100%
+          ),
+          linear-gradient(90deg, rgb(53, 53, 53), rgb(0, 0, 0));
+        padding: 100px 0;
+        text-align: center;
+      }
+
+      .feature {
+        margin-bottom: 50px;
+      }
+
+      .feature-heading {
+        font-size: 2rem;
+      }
+
+      .feature-description {
+        font-size: 1.2rem;
+      }
+
+      /* Contacts Section */
+      .contacts {
+        padding: 100px 0;
+        text-align: center;
+        color: #fff;
+      }
+
+      .contact-info {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+      }
+
+      .contact-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      /* Footer Section */
+      .footer {
+        background-color: #191818;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+      }
+
+      .footer p {
+        margin: 0;
+      }
+
+      .faq {
+        background-image: linear-gradient(
+            309deg,
+            rgba(187, 187, 187, 0.03) 0%,
+            rgba(187, 187, 187, 0.03) 22%,
+            rgba(207, 207, 207, 0.03) 22%,
+            rgba(207, 207, 207, 0.03) 43%,
+            rgba(148, 148, 148, 0.03) 43%,
+            rgba(148, 148, 148, 0.03) 62%,
+            rgba(90, 90, 90, 0.03) 62%,
+            rgba(90, 90, 90, 0.03) 68%,
+            rgba(195, 195, 195, 0.03) 68%,
+            rgba(195, 195, 195, 0.03) 88%,
+            rgba(34, 34, 34, 0.03) 88%,
+            rgba(34, 34, 34, 0.03) 95%,
+            rgba(215, 215, 215, 0.03) 95%,
+            rgba(215, 215, 215, 0.03) 100%
+          ),
+          linear-gradient(
+            35deg,
+            rgba(100, 100, 100, 0.03) 0%,
+            rgba(100, 100, 100, 0.03) 9%,
+            rgba(5, 5, 5, 0.03) 9%,
+            rgba(5, 5, 5, 0.03) 40%,
+            rgba(89, 89, 89, 0.03) 40%,
+            rgba(89, 89, 89, 0.03) 44%,
+            rgba(5, 5, 5, 0.03) 44%,
+            rgba(5, 5, 5, 0.03) 69%,
+            rgba(130, 130, 130, 0.03) 69%,
+            rgba(130, 130, 130, 0.03) 79%,
+            rgba(204, 204, 204, 0.03) 79%,
+            rgba(204, 204, 204, 0.03) 88%,
+            rgba(247, 247, 247, 0.03) 88%,
+            rgba(247, 247, 247, 0.03) 100%
+          ),
+          linear-gradient(90deg, rgb(53, 53, 53), rgb(0, 0, 0));
+        padding: 60px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar bg-primary fixed-top" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fas-2" href="#">🧬 KUCET</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="offcanvas bg-primary offcanvas-end canvas"
+          style="width: 250px"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">🧬 KUCET</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body bg-primary canvas w-50">
+            <ul class="navbar-nav justify-content-end pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/genetic"
+                  >Algorithm</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/register">Register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container text-center">
+        <h1 class="hero-text">Genetic Algorithm for Classification</h1>
+        <p class="hero-subtext">
+          Optimize Your Classification Models with Genetic Algorithms
+        </p>
+        <a href="#features" class="btn btn-primary btn-lg">Learn More</a>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features bg-light" id="features">
+      <div class="container">
+        <h2 class="section-heading text-center mb-5">Key Features</h2>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Population Initialization</h5>
+                <p class="card-text">
+                  Efficiently generate diverse initial populations for
+                  optimization.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Fitness Function Definition</h5>
+                <p class="card-text">
+                  Define robust fitness functions tailored to your
+                  classification objectives.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Genetic Operators Application</h5>
+                <p class="card-text">
+                  Apply mutation and crossover strategies to evolve optimal
+                  classification solutions.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Iterative Optimization</h5>
+                <p class="card-text">
+                  Iterate through generations to refine classification models
+                  until convergence.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Selection Techniques</h5>
+                <p class="card-text">
+                  Employ various selection strategies to choose parent
+                  chromosomes for reproduction.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Hyperparameter Tuning</h5>
+                <p class="card-text">
+                  Optimize genetic algorithm parameters for better
+                  classification performance.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Visualization and Analysis</h5>
+                <p class="card-text">
+                  Visualize the evolution of classification solutions and
+                  analyze convergence behavior.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Integration with ML Frameworks</h5>
+                <p class="card-text">
+                  Seamlessly integrate genetic algorithm optimization with
+                  popular ML frameworks.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-light">
+              <div class="card-body">
+                <h5 class="card-title">Scalability and Parallelization</h5>
+                <p class="card-text">
+                  Ensure scalability and parallel processing capabilities for
+                  handling large datasets.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container text-light py-5">
+      <div class="row">
+        <div class="text-center">
+          <h2>Get Started</h2>
+          <p>
+            Start optimizing your classification models with genetic algorithms
+            today.
+          </p>
+          <a href="/register" class="btn btn-warning btn-sm py-2 px-4"
+            >Sign Up</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <section class="faq">
+      <div class="container">
+        <h3 class="text-center text-light my-4">Frequently Asked Questions</h3>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne"
+                aria-expanded="false"
+                aria-controls="flush-collapseOne"
+              >
+                What is a genetic algorithm and how does it work?
+              </button>
+            </h2>
+            <div
+              id="flush-collapseOne"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingOne"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                A genetic algorithm is a search heuristic inspired by the
+                process of natural selection. It operates on a population of
+                potential solutions (chromosomes), and iteratively applies
+                genetic operators such as selection, crossover, and mutation to
+                evolve the population towards better solutions.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseTwo"
+                aria-expanded="false"
+                aria-controls="flush-collapseTwo"
+              >
+                How can genetic algorithms be applied to classification tasks?
+              </button>
+            </h2>
+            <div
+              id="flush-collapseTwo"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingTwo"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                Genetic algorithms can be applied to classification tasks by
+                encoding potential classifications as chromosomes, defining a
+                fitness function to evaluate the quality of each classification,
+                and iteratively evolving the population of classifications using
+                genetic operators like crossover and mutation until an optimal
+                or near-optimal solution is found.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseThree"
+                aria-expanded="false"
+                aria-controls="flush-collapseThree"
+              >
+                What are the advantages of using genetic algorithms for
+                classification?
+              </button>
+            </h2>
+            <div
+              id="flush-collapseThree"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingThree"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                Some advantages of using genetic algorithms for classification
+                include their ability to search large solution spaces
+                efficiently, handle non-linear and non-convex optimization
+                problems, and find solutions that may not be obvious through
+                traditional optimization methods.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingFour">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseFour"
+                aria-expanded="false"
+                aria-controls="flush-collapseFour"
+              >
+                How do genetic algorithms compare to other machine learning
+                algorithms for classification?
+              </button>
+            </h2>
+            <div
+              id="flush-collapseFour"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingFour"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                Genetic algorithms offer a different approach to optimization
+                compared to traditional machine learning algorithms. While they
+                may not always outperform other methods in terms of accuracy,
+                they can be useful for exploring and optimizing complex solution
+                spaces where traditional algorithms may struggle.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingFive">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseFive"
+                aria-expanded="false"
+                aria-controls="flush-collapseFive"
+              >
+                How can I implement a genetic algorithm for classification in
+                practice?
+              </button>
+            </h2>
+            <div
+              id="flush-collapseFive"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingFive"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                Implementing a genetic algorithm for classification involves
+                encoding solutions as chromosomes, defining a fitness function,
+                selecting parents, applying genetic operators (mutation,
+                crossover), and iterating through generations until convergence.
+                Libraries such as scikit-learn in Python provide tools for
+                implementing genetic algorithms for classification.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer text-white text-center" data-bs-theme="dark">
+      <div class="container">
+        <p>
+          &copy; 2024 Genetic Algorithm Classification Project. All rights
+          reserved.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap Scripts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- GSAP Animation Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+      gsap.from(".hero-text", { opacity: 0, y: 50, duration: 1, delay: 0.5 });
+      gsap.from(".hero-subtext", {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        delay: 0.7,
+      });
+      gsap.from(".btn", { opacity: 0, scale: 0.5, duration: 1, delay: 0.9 });
+      gsap.from(".contact", {
+        opacity: 0,
+        scale: 0.5,
+        duration: 1,
+        delay: 1.2,
+      });
+      gsap.from(".accordion", {
+        opacity: 0,
+        y: 50,
+        stagger: 0.3,
+        duration: 1,
+        delay: 1.4,
+      });
+      gsap.from(".card", {
+        opacity: 0,
+        y: 50,
+        stagger: 0.3,
+        duration: 1,
+        delay: 1.6,
+      });
+    </script>
+  </body>
+</html>
