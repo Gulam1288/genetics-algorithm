@@ -117,9 +117,6 @@ def result():
     n_population = max(2, max(n_population, 5))
     n_generations = max(1, max(n_generations, 2))
     n_parents = max(1, max(n_parents, 1))
-    print(n_population,n_generations,n_parents)
-
-    print(mutation_rate)
 
     n_features = X_train.shape[1]
 
@@ -201,8 +198,21 @@ def result():
     img.seek(0)
     plot3 =  base64.b64encode(img.getvalue()).decode()
     
-    return render_template('result.html', test_accuracy=test_accuracy, plot1 = 'data:image/png;base64,{}'.format(plot1),plot2 = 'data:image/png;base64,{}'.format(plot2), plot3 = 'data:image/png;base64,{}'.format(plot3))
+    confusion_message = "The confusion matrix provides a breakdown of the model's performance:<br><br>"
+    confusion_message += "True Positives: {}<br>".format(cm[1, 1])
+    confusion_message += "True Negatives: {}<br>".format(cm[0, 0])
+    confusion_message += "False Positives: {}<br>".format(cm[0, 1])
+    confusion_message += "False Negatives: {}<br>".format(cm[1, 0])
+    confusion_message += "Accuracy: {:.2f}<br>".format(test_accuracy)
+    confusion_message += "Precision: {:.2f}<br>".format((cm[1, 1] / (cm[1, 1] + cm[0, 1])) * 100)
+    confusion_message += "Recall: {:.2f}<br>".format((cm[1, 1] / (cm[1, 1] + cm[1, 0])) * 100)
+    confusion_message += "F1 Score: {:.2f}<br>".format((2 * (cm[1, 1] / (cm[1, 1] + cm[1, 0])) * (cm[1, 1] / (cm[1, 1] + cm[0, 1]))) / ((cm[1, 1] / (cm[1, 1] + cm[1, 0])) + (cm[1, 1] / (cm[1, 1] + cm[0, 1]))) * 100)
 
+    fpr, tpr, _ = roc_curve(y_test, clf_final.predict_proba(X_test_selected)[:, 1])
+    roc_message = "The ROC curve illustrates the model's ability to discriminate between positive and negative classes:<br><br>"
+    roc_message += "Area Under Curve (AUC): {:.2f}<br>".format(roc_auc_score(y_test, clf_final.predict(X_test_selected)))
+
+    return render_template('result.html', test_accuracy= "{:.5f}".format(test_accuracy), plot1 = 'data:image/png;base64,{}'.format(plot1),plot2 = 'data:image/png;base64,{}'.format(plot2), plot3 = 'data:image/png;base64,{}'.format(plot3),confusion_message=confusion_message,roc_message=roc_message)
 
 @app.route("/")
 def index():
@@ -229,7 +239,7 @@ db = mysql.connector.connect(
 @app.route('/logout')
 def logout():
     session.pop('user', None)
-    return redirect(url_for('login'))
+    return render_template("logout.html")
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

@@ -274,12 +274,16 @@
               <li class="nav-item">
                 <a class="nav-link active" href="/register">Register</a>
               </li>
+              {% if not session['user'] %}
               <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                  <a class="nav-link" href="/login">Login</a>
               </li>
+              {% endif %}
+              {% if session['user'] %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                  <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
               </li>
+              {% endif %}
             </ul>
           </div>
         </div>

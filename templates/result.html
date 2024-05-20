@@ -94,6 +94,23 @@
       .footer p {
         margin: 0;
       }
+
+      .confusion {
+        padding: 20px;
+        margin-bottom: 33px;
+      }
+
+      .explanation {
+        margin-top: 50px;
+      }
+
+      .accuracy {
+        background: #edf8ff;
+        margin-top: 40px;
+        color: #000000;
+        padding: 10px 20px;
+        border-radius: 10px;
+      }
     </style>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -145,12 +162,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="/register">Register</a>
               </li>
+              {% if not session['user'] %}
               <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                  <a class="nav-link" href="/login">Login</a>
               </li>
+              {% endif %}
+              {% if session['user'] %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                  <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
               </li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -158,7 +179,13 @@
     </nav>
     <div class="container">
       <h1 class="mb-4 text-center">Genetic Algorithm Results</h1>
-      <p class="mb-3">Test Accuracy: {{ test_accuracy }}</p>
+      <p class="mb-3 fas-4 accuracy">
+        <strong>Test Accuracy: {{ test_accuracy }}</strong> 
+        <br/>
+        Test accuracy indicates the percentage of correctly predicted instances out of all instances in the test dataset.
+        It reflects the overall performance of the model in making correct predictions.
+      </p>
+      
       <h2 class="mt-5 mb-3">Plots:</h2>
       <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
@@ -187,8 +214,52 @@
           </div>
           <h4 class="text-center mt-3">ROC Curve</h4>
         </div>
+        <div class="col">
+          <div class="card confusion">
+            <p>{{ confusion_message | safe}}</p>
+          </div>
+          <div class="card p-3">
+            <p>{{ roc_message | safe}}</p>
+          </div>
+        </div>
+      </div>
+    <!-- Explanation of Confusion Matrix -->
+    <div class="card bg-success text-light mb-4 confusion explanation">
+      <div class="card-body">
+        <h5 class="card-title">Confusion Matrix Explanation</h5>
+        <p class="card-text">
+          The confusion matrix provides a detailed breakdown of the model's performance:
+          <ul>
+            <li><strong>True Positive (TP):</strong> Number of actual positive cases correctly predicted as positive.</li>
+            <li><strong>True Negative (TN):</strong> Number of actual negative cases correctly predicted as negative.</li>
+            <li><strong>False Positive (FP):</strong> Number of actual negative cases incorrectly predicted as positive.</li>
+            <li><strong>False Negative (FN):</strong> Number of actual positive cases incorrectly predicted as negative.</li>
+            <li><strong>Accuracy:</strong> Percentage of correctly classified instances.</li>
+            <li><strong>Precision:</strong> Percentage of true positive predictions among all positive predictions.</li>
+            <li><strong>Recall:</strong> Percentage of true positive predictions among all actual positive instances.</li>
+            <li><strong>F1 Score:</strong> Harmonic mean of precision and recall.</li>
+          </ul>
+        </p>
       </div>
     </div>
+
+    <!-- Explanation of ROC Curve -->
+    <div class="card bg-primary text-light p-3">
+      <div class="card-body">
+        <h5 class="card-title">ROC Curve Explanation</h5>
+        <p class="card-text">
+          The Receiver Operating Characteristic (ROC) curve illustrates the trade-off between the true positive rate (TPR) and false positive rate (FPR) at various threshold settings.
+          <br />
+          The Area Under Curve (AUC) represents the overall performance of the model:
+          <ul>
+            <li>An AUC of 1 indicates a perfect model.</li>
+            <li>An AUC of 0.5 indicates a random guess.</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- Footer Section -->
     <footer class="footer text-white text-center" data-bs-theme="dark">
       <div class="container">

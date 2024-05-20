@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(circle at 16% 83%, rgba(148, 148, 148,0.06) 0%, rgba(148, 148, 148,0.06) 50%,rgba(63, 63, 63,0.06) 50%, rgba(63, 63, 63,0.06) 100%),radial-gradient(circle at 68% 87%, rgba(66, 66, 66,0.06) 0%, rgba(66, 66, 66,0.06) 50%,rgba(105, 105, 105,0.06) 50%, rgba(105, 105, 105,0.06) 100%),radial-gradient(circle at 38% 50%, rgba(123, 123, 123,0.06) 0%, rgba(123, 123, 123,0.06) 50%,rgba(172, 172, 172,0.06) 50%, rgba(172, 172, 172,0.06) 100%),linear-gradient(90deg, hsl(18,0%,1%),hsl(18,0%,1%));            color: #fff;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Logging out...</h1>
+        <p>Redirecting in <span id="countdown">2</span> seconds</p>
+    </div>
+    <script>
+        // Countdown and redirect
+        var countdown = 2; // Set initial countdown value
+        var countdownInterval = setInterval(function() {
+            document.getElementById("countdown").innerText = countdown;
+            countdown--; // Decrement countdown value
+            if (countdown < 0) {
+                clearInterval(countdownInterval); // Stop the countdown
+                window.location.href = '/'; // Redirect after countdown ends
+            }
+        }, 1000); // 1000 milliseconds (1 second) interval
+    </script>
+
+</body>
+</html>

@@ -103,6 +103,7 @@
         align-items: center;
         flex-direction: column;
         margin: 30px auto;
+        max-width: -moz-fit-content;
         max-width: fit-content;
         background-image: radial-gradient(
             circle at 35% 14%,
@@ -272,12 +273,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="/register">Register</a>
               </li>
+              {% if not session['user'] %}
               <li class="nav-item">
-                <a class="nav-link active" href="/login">Login</a>
+                  <a class="nav-link active" href="/login">Login</a>
               </li>
+              {% endif %}
+              {% if session['user'] %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                  <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
               </li>
+              {% endif %}
             </ul>
           </div>
         </div>
